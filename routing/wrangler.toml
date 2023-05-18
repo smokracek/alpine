@@ -1,2 +1,8 @@
-name = ""
+name = "alpine-router"
 compatibility_date = "2023-01-01"
+
+
+[[d1_databases]]
+binding = "ALPINE_DB"
+database_name = "alpine"
+database_id = "5f98b69b-3503-4702-b8c0-fbd5535393a3"
