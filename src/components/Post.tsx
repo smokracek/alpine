@@ -17,7 +17,7 @@ export const Post: React.FC<Post> = ({ id, username, caption, id_img }) => {
       borderRadius={10}
       shadow={'lg'}
     >
-      <h1>{username}</h1>
+      <Text>{username}</Text>
       <Text>{caption}</Text>
     </VStack>
   );
