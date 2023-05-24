@@ -1,7 +1,7 @@
 import { Button, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 import Feed from './Feed';
-import ENV from './../environment';
+import GATSBY_ENV from '../gatsby_environment';
 
 const Main: React.FC<{}> = () => {
   return (
@@ -9,7 +9,6 @@ const Main: React.FC<{}> = () => {
       <VStack w={'30%'} alignItems={'end'} justifyItems={'start'} h={'100%'}>
         <VStack p={5} borderRadius={10} bgColor={'white'} shadow={'lg'}>
           <Button>New Post</Button>
-          <Button>My Profile</Button>
         </VStack>
       </VStack>
       <VStack w={'40%'} h={'100%'}>

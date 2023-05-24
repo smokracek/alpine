@@ -1,14 +1,13 @@
-import { VStack, Text } from '@chakra-ui/react';
+import { VStack, Text, Image } from '@chakra-ui/react';
 import React from 'react';
 
 export type Post = {
-  id: number;
+  id: string;
   username: string;
   caption: string;
-  id_img: number;
 };
 
-export const Post: React.FC<Post> = ({ id, username, caption, id_img }) => {
+export const Post: React.FC<Post> = ({ id, username, caption }) => {
   return (
     <VStack
       w={'100%'}
@@ -16,8 +15,9 @@ export const Post: React.FC<Post> = ({ id, username, caption, id_img }) => {
       backgroundColor={'white'}
       borderRadius={10}
       shadow={'lg'}
+      alignItems={'left'}
     >
-      <Text>{username}</Text>
+      <Text variant={'h2'}>{username}</Text>
       <Text>{caption}</Text>
     </VStack>
   );

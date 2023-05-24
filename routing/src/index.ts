@@ -1,13 +1,6 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
-type Post = {
-  id: number;
-  username: string;
-  caption: string;
-  id_img: number;
-};
-
 type Bindings = {
   ALPINE_DB: D1Database;
 };

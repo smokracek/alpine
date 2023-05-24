@@ -1,7 +1,7 @@
 import { VStack, Text, Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Post, Post as PostProps } from './Post';
-import ENV from './../environment';
+import GATSBY_ENV from '../gatsby_environment';
 
 const Feed: React.FC<{}> = () => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -9,7 +9,7 @@ const Feed: React.FC<{}> = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${ENV.CF_PROD_URL}/posts`);
+        const res = await fetch(`${GATSBY_ENV.CF_PROD_URL}/posts`);
         const data = await res.json();
         console.log('Post Results:', JSON.stringify(data, null, 2));
         setPosts(data);
@@ -41,7 +41,6 @@ const Feed: React.FC<{}> = () => {
               id={post.id}
               username={post.username}
               caption={post.caption}
-              id_img={post.id_img}
             ></Post>
           );
         })
