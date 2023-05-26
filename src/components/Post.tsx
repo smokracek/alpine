@@ -36,7 +36,9 @@ export const Post: React.FC<Post> = ({ id, username, caption, date }) => {
         fontSize={'sm'}
         alignSelf={'flex-end'}
         color={'gray.400'}
-      >{`${adjustedHours}:${minutes} ${ampm}, ${month}/${day}/${year}`}</Text>
+      >{`${adjustedHours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      } ${ampm}, ${month}/${day}/${year}`}</Text>
     </VStack>
   );
 };

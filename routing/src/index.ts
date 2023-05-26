@@ -17,7 +17,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use(
   '/*',
   cors({
-    origin: 'http://localhost:8000',
+    origin: ['http://localhost:8000', 'https://5e6e59a3.alpine-3ar.pages.dev'],
     allowMethods: ['GET', 'POST', 'OPTIONS'],
   })
 );
