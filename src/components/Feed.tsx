@@ -20,33 +20,36 @@ const Feed: React.FC<{}> = () => {
     fetchPosts();
   }, []);
 
-  return (
-    <VStack w={'100%'}>
-      {posts.length === 0 ? (
-        <Flex
-          w={'100%'}
-          p={5}
-          backgroundColor={'white'}
-          borderRadius={10}
-          shadow={'lg'}
-          justifyContent={'center'}
-        >
-          <Text>No posts to display!</Text>
-        </Flex>
-      ) : (
-        posts.map((post) => {
+  if (posts.length === 0) {
+    return (
+      <Flex
+        w={'100%'}
+        p={5}
+        backgroundColor={'white'}
+        borderRadius={10}
+        shadow={'lg'}
+        justifyContent={'center'}
+      >
+        <Text>No posts to display!</Text>
+      </Flex>
+    );
+  } else {
+    return (
+      <VStack gap={3}>
+        {posts.map((post) => {
           return (
             <Post
               key={post.id}
               id={post.id}
               username={post.username}
               caption={post.caption}
+              date={post.date}
             ></Post>
           );
-        })
-      )}
-    </VStack>
-  );
+        })}
+      </VStack>
+    );
+  }
 };
 
 export default Feed;
