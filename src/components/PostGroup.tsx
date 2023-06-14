@@ -1,20 +1,14 @@
-import {
-  Button,
-  HStack,
-  VStack,
-  Text,
-  Textarea,
-  Input,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
+import { Button, VStack, Text, Input, Textarea } from '@chakra-ui/react';
+import GATSBY_ENV from '../gatsby_environment';
 import { v4 as uuidv4 } from 'uuid';
-import Feed from './Feed';
 
 const PostMenu: React.FC<{}> = () => {
   const [usernameInput, setUsernameInput] = useState('');
   const [captionInput, setCaptionInput] = useState('');
 
-  const handlePost = () => {
+  const handlePost = async () => {
     const username = usernameInput;
     const caption = captionInput;
 
@@ -48,6 +42,29 @@ const PostMenu: React.FC<{}> = () => {
 
     const postId = uuidv4().toString();
     const date = Date.now();
+
+    const post = {
+      username: username,
+      caption: caption,
+      id: postId,
+      date: date,
+    };
+
+    try {
+      const response = await fetch(`${GATSBY_ENV.CF_PROD_URL}/post`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(post, null, 2),
+      });
+
+      const result = await response.json();
+      console.log('Got result from posting: ', result);
+      location.reload();
+    } catch (err) {
+      console.error('Got error from posting: ', err);
+    }
   };
 
   return (
@@ -75,29 +92,29 @@ const PostMenu: React.FC<{}> = () => {
   );
 };
 
-const Main: React.FC<{}> = () => {
+const PostGroup: React.FC<{}> = () => {
   const [postMenuIsOpen, setPostMenuIsOpen] = useState(false);
 
   return (
-    <HStack w={'100%'}>
-      <VStack w={'30%'} alignItems={'end'} justifyItems={'start'} h={'100%'}>
-        <VStack p={5} borderRadius={10} bgColor={'white'} shadow={'lg'}>
-          <Button
-            onClick={() => setPostMenuIsOpen(!postMenuIsOpen)}
-            variant={postMenuIsOpen ? 'outline' : 'solid'}
-            color={postMenuIsOpen ? 'red' : ''}
-          >
-            {postMenuIsOpen ? 'Cancel' : 'New Post'}
-          </Button>
-        </VStack>
-        {postMenuIsOpen ? <PostMenu /> : <></>}
+    <VStack position={'sticky'} zIndex={10}>
+      <VStack
+        p={5}
+        borderRadius={10}
+        bgColor={'white'}
+        shadow={'lg'}
+        alignSelf={'flex-end'}
+      >
+        <Button
+          onClick={() => setPostMenuIsOpen(!postMenuIsOpen)}
+          variant={postMenuIsOpen ? 'outline' : 'solid'}
+          color={postMenuIsOpen ? 'red' : ''}
+        >
+          {postMenuIsOpen ? 'Cancel' : 'New Post'}
+        </Button>
       </VStack>
-      <VStack w={'40%'} h={'100%'}>
-        <Feed></Feed>
-      </VStack>
-      <VStack w={'30%'} alignItems={'start'} h={'100%'}></VStack>
-    </HStack>
+      {postMenuIsOpen ? <PostMenu /> : <></>}
+    </VStack>
   );
 };
 
-export default Main;
+export default PostGroup;
